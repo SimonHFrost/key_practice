@@ -61,16 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Material(
-        child: ListView.separated(
-          itemCount: musicalKeys.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              height: 50,
-              color: Colors.amber[colorCodes[index]],
-              child: Center(child: createRow(context, musicalKeys[index], display1Style)),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) => const Divider(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: ListView.separated(
+            itemCount: musicalKeys.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                height: 50,
+                color: Colors.amber[colorCodes[index]],
+                child: Center(child: createRow(context, musicalKeys[index], display1Style)),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
