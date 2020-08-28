@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  final List<int> colorCodes = <int>[600, 500, 100];
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -36,13 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   InkWell createRow(BuildContext context, String musicalKey, style) {
     return InkWell(
-      child: Row(
-        children: [
-          Expanded(
-            child: (Text(musicalKey,
-                style: style, textAlign: TextAlign.center)),
-          )
-        ],
+      child: Container(
+        height: 50,
+        child: Text(musicalKey, style: style, textAlign: TextAlign.center),
       ),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Countdown(musicalKey: musicalKey)));
@@ -52,24 +50,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final display1Style = Theme.of(context).textTheme.display1;
+    final display1Style = Theme
+        .of(context)
+        .textTheme
+        .display1;
+
+    final keys = ['C', 'G', 'D'];
+    final List<int> colorCodes = <int>[600, 500, 100];
 
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Material(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            createRow(context, 'C', display1Style),
-            createRow(context, 'G', display1Style),
-            createRow(context, 'D', display1Style),
-//          Text(
-//            '$_counter',
-//            style: display1Style,
-//          ),
-          ],
+        child: ListView.separated(
+          itemCount: keys.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              height: 50,
+              color: Colors.amber[colorCodes[index]],
+              child: Center(child: createRow(context, keys[index], display1Style)),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) => const Divider(),
         ),
       ),
       floatingActionButton: FloatingActionButton(
