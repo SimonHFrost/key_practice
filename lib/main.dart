@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'countdown.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,17 +34,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  InkWell createRow(String key, style) {
+  InkWell createRow(BuildContext context, String musicalKey, style) {
     return InkWell(
       child: Row(
         children: [
           Expanded(
-            child: (Text(key,
+            child: (Text(musicalKey,
                 style: style, textAlign: TextAlign.center)),
           )
         ],
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Countdown(musicalKey: musicalKey)));
+      },
     );
   }
 
@@ -59,9 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            createRow('C', display1Style),
-            createRow('G', display1Style),
-            createRow('D', display1Style),
+            createRow(context, 'C', display1Style),
+            createRow(context, 'G', display1Style),
+            createRow(context, 'D', display1Style),
 //          Text(
 //            '$_counter',
 //            style: display1Style,
