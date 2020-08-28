@@ -7,6 +7,11 @@ class Countdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Center(child: Text(this.musicalKey)));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(musicalKey),
+      ),
+      body: Center(child: Text(this.musicalKey)),
+    );
   }
 }
