@@ -35,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final display1Style = Theme.of(context).textTheme.display1;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -42,13 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            'You have pushed the button this many times:',
-          ),
-          Text(
-            '$_counter',
-            style: Theme.of(context).textTheme.display1,
-          ),
+          Row(children: [Expanded(child: (Text('C', style: display1Style, textAlign: TextAlign.center)))]),
+          Row(children: [Expanded(child: (Text('G', style: display1Style, textAlign: TextAlign.center)))]),
+          Row(children: [Expanded(child: (Text('D', style: display1Style, textAlign: TextAlign.center)))]),
+//          Text(
+//            '$_counter',
+//            style: display1Style,
+//          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
