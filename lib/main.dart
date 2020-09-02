@@ -28,12 +28,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<int> colorCodes = <int>[600, 500, 100];
   final musicalKeys = ['C', 'G', 'D'];
+  final activeKeys = [];
 
   void _startRandom() {
     setState(() {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Countdown(musicalKey: musicalKeys[new Random().nextInt(3)])));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Countdown(
+                  musicalKey:
+                      activeKeys[new Random().nextInt(activeKeys.length)])));
     });
   }
 
@@ -41,17 +46,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return FlatButton(
       child: Text(musicalKey, style: style, textAlign: TextAlign.center),
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Countdown(musicalKey: musicalKey)));
+        setState(() {
+          activeKeys.contains(musicalKey)
+              ? activeKeys.remove(musicalKey)
+              : activeKeys.add(musicalKey);
+        });
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final headerStyle = Theme
-        .of(context)
-        .textTheme
-        .headline5;
+    final headerStyle = Theme.of(context).textTheme.headline5;
 
     return Scaffold(
       appBar: AppBar(
@@ -65,15 +71,18 @@ class _MyHomePageState extends State<MyHomePage> {
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 height: 50,
-                color: Colors.amber[colorCodes[index]],
-                child: Center(child: createRow(context, musicalKeys[index], headerStyle)),
+                color: activeKeys.contains(musicalKeys[index])
+                    ? Colors.lime[100]
+                    : Colors.amber[100],
+                child: Center(
+                    child: createRow(context, musicalKeys[index], headerStyle)),
               );
             },
-            separatorBuilder: (BuildContext context, int index) => const Divider(),
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
           ),
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: _startRandom,
         child: Icon(Icons.play_arrow),
