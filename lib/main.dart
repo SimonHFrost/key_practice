@@ -37,13 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  InkWell createRow(BuildContext context, String musicalKey, style) {
-    return InkWell(
-      child: Container(
-        height: 50,
-        child: Text(musicalKey, style: style, textAlign: TextAlign.center),
-      ),
-      onTap: () {
+  FlatButton createRow(BuildContext context, String musicalKey, style) {
+    return FlatButton(
+      child: Text(musicalKey, style: style, textAlign: TextAlign.center),
+      onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Countdown(musicalKey: musicalKey)));
       },
     );
@@ -51,10 +48,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final display1Style = Theme
+    final headerStyle = Theme
         .of(context)
         .textTheme
-        .display1;
+        .headline5;
 
     return Scaffold(
       appBar: AppBar(
@@ -69,16 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
               return Container(
                 height: 50,
                 color: Colors.amber[colorCodes[index]],
-                child: Center(child: createRow(context, musicalKeys[index], display1Style)),
+                child: Center(child: createRow(context, musicalKeys[index], headerStyle)),
               );
             },
             separatorBuilder: (BuildContext context, int index) => const Divider(),
           ),
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _startRandom,
-        tooltip: 'Increment',
         child: Icon(Icons.play_arrow),
       ),
     );
