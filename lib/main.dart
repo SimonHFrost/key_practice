@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'countdown.dart';
 
 void main() => runApp(MyApp());
@@ -28,7 +29,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final musicalKeys = ['C', 'G', 'D', 'A', 'E', 'B'];
+  final musicalKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+  final minorKeys = ['Cm', 'Dm', 'Em', 'Fm', 'Gm', 'Am', 'Bm'];
   final activeKeys = ['C'];
 
   void _startRandom() {
@@ -42,9 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Countdown(
-                  musicalKey:
-                      activeKeys[randomIndex])));
+              builder: (context) =>
+                  Countdown(musicalKey: activeKeys[randomIndex])));
     });
   }
 
@@ -72,20 +73,45 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Material(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: ListView.separated(
-            itemCount: musicalKeys.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                height: 50,
-                color: activeKeys.contains(musicalKeys[index])
-                    ? Colors.lime[100]
-                    : Colors.amber[100],
-                child: Center(
-                    child: createRow(context, musicalKeys[index], headerStyle)),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ListView.separated(
+                  itemCount: musicalKeys.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 50,
+                      color: activeKeys.contains(musicalKeys[index])
+                          ? Colors.lime[100]
+                          : Colors.amber[100],
+                      child: Center(
+                          child: createRow(
+                              context, musicalKeys[index], headerStyle)),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: minorKeys.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 50,
+                      color: activeKeys.contains(minorKeys[index])
+                          ? Colors.lime[100]
+                          : Colors.amber[100],
+                      child: Center(
+                          child: createRow(
+                              context, minorKeys[index], headerStyle)),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                ),
+              ),
+            ],
           ),
         ),
       ),

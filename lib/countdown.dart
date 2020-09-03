@@ -39,11 +39,12 @@ class _CountdownState extends State<Countdown> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.musicalKey),
+        title: Text('Key Practice'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(widget.musicalKey,
                 style: Theme.of(context).textTheme.headline1),
