@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Countdown extends StatefulWidget {
   final String musicalKey;
 
-  int timeLeft = 5;
+  int timeLeft = 60;
 
   Countdown({Key key, this.musicalKey}) : super(key: key);
 
@@ -29,6 +29,13 @@ class _CountdownState extends State<Countdown> {
     });
   }
 
+  String _formatTime(int duration) {
+    int minutes = duration ~/ 60;
+    int seconds = duration % 60;
+
+    return "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -48,9 +55,7 @@ class _CountdownState extends State<Countdown> {
           children: <Widget>[
             Text(widget.musicalKey,
                 style: Theme.of(context).textTheme.headline1),
-            Text('Time Remaining:',
-                style: Theme.of(context).textTheme.display1),
-            Text(widget.timeLeft.toString(),
+            Text(_formatTime(widget.timeLeft),
                 style: Theme.of(context).textTheme.display1),
           ],
         ),
