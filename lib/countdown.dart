@@ -43,11 +43,22 @@ class _CountdownState extends State<Countdown> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Time Remaining:', style: Theme.of(context).textTheme.display1),
-            Text(widget.timeLeft.toString(), style: Theme.of(context).textTheme.display1),
+            Text(widget.musicalKey,
+                style: Theme.of(context).textTheme.headline1),
+            Text('Time Remaining:',
+                style: Theme.of(context).textTheme.display1),
+            Text(widget.timeLeft.toString(),
+                style: Theme.of(context).textTheme.display1),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Icon(Icons.stop),
       ),
     );
   }
