@@ -28,17 +28,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final musicalKeys = ['C', 'G', 'D'];
-  final activeKeys = [];
+  final musicalKeys = ['C', 'G', 'D', 'A', 'E', 'B'];
+  final activeKeys = ['C'];
 
   void _startRandom() {
+    if (activeKeys.length < 1) {
+      return;
+    }
+
+    final randomIndex = new Random().nextInt(activeKeys.length);
+
     setState(() {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => Countdown(
                   musicalKey:
-                      activeKeys[new Random().nextInt(activeKeys.length)])));
+                      activeKeys[randomIndex])));
     });
   }
 
