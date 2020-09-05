@@ -1,8 +1,25 @@
 import 'dart:math';
 
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'countdown.dart';
+
+enum MusicalKeyEvent { addMusicalKey }
+
+class MusicalKeyBloc extends Bloc<MusicalKeyEvent, List<String>> {
+  MusicalKeyBloc(musicalKeys) : super(musicalKeys);
+
+  @override
+  Stream<List<String>> mapEventToState(MusicalKeyEvent event) async* {
+    switch (event) {
+      case MusicalKeyEvent.addMusicalKey:
+        yield state..add('B');
+        break;
+    }
+  }
+}
 
 void main() => runApp(MyApp());
 
@@ -31,21 +48,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final musicalKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   final minorKeys = ['Cm', 'Dm', 'Em', 'Fm', 'Gm', 'Am', 'Bm'];
-  final activeKeys = ['C'];
+
+  final musicalKeysBloc = new MusicalKeyBloc(['C']);
 
   void _startRandom() {
-    if (activeKeys.length < 1) {
+    if (musicalKeysBloc.state.length < 1) {
       return;
     }
 
-    final randomIndex = new Random().nextInt(activeKeys.length);
+    final randomIndex = new Random().nextInt(musicalKeysBloc.state.length);
 
     setState(() {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  Countdown(musicalKey: activeKeys[randomIndex])));
+                  Countdown(musicalKey: musicalKeysBloc.state[randomIndex])));
     });
   }
 
@@ -54,9 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Text(musicalKey, style: style, textAlign: TextAlign.center),
       onPressed: () {
         setState(() {
-          activeKeys.contains(musicalKey)
-              ? activeKeys.remove(musicalKey)
-              : activeKeys.add(musicalKey);
+          musicalKeysBloc.state.contains(musicalKey)
+              ? musicalKeysBloc.state.remove(musicalKey)
+              : musicalKeysBloc.state.add(musicalKey);
         });
       },
     );
@@ -81,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       height: 50,
-                      color: activeKeys.contains(musicalKeys[index])
+                      color: musicalKeysBloc.state.contains(musicalKeys[index])
                           ? Colors.lime[100]
                           : Colors.amber[100],
                       child: Center(
@@ -99,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       height: 50,
-                      color: activeKeys.contains(minorKeys[index])
+                      color: musicalKeysBloc.state.contains(minorKeys[index])
                           ? Colors.lime[100]
                           : Colors.amber[100],
                       child: Center(
