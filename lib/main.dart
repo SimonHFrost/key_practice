@@ -89,6 +89,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final headerStyle = Theme.of(context).textTheme.headline5;
 
+    Widget buildListOfButtons(state, musicalKeys) {
+      return Expanded(
+        child: ListView.separated(
+          itemCount: musicalKeys.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              height: 50,
+              color: state.contains(musicalKeys[index])
+                  ? Colors.lime[100]
+                  : Colors.amber[100],
+              child: Center(
+                  child: createRow(context, musicalKeys[index], headerStyle)),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+        ),
+      );
+    }
+
     return BlocBuilder<MusicalKeyBloc, List<String>>(builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
@@ -99,42 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Row(
               children: <Widget>[
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: musicalKeys.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 50,
-                        color: state.contains(musicalKeys[index])
-                            ? Colors.lime[100]
-                            : Colors.amber[100],
-                        child: Center(
-                            child: createRow(
-                                context, musicalKeys[index], headerStyle)),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: minorKeys.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 50,
-                        color: state.contains(minorKeys[index])
-                            ? Colors.lime[100]
-                            : Colors.amber[100],
-                        child: Center(
-                            child: createRow(
-                                context, minorKeys[index], headerStyle)),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                  ),
-                ),
+                buildListOfButtons(state, musicalKeys),
+                buildListOfButtons(state, minorKeys),
               ],
             ),
           ),
