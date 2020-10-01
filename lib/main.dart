@@ -1,25 +1,12 @@
 import 'dart:math';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'countdown.dart';
+import 'musicalKeyBloc.dart';
 
 enum MusicalKeyEvent { addMusicalKey }
-
-class MusicalKeyBloc extends Bloc<MusicalKeyEvent, List<String>> {
-  MusicalKeyBloc(musicalKeys) : super(musicalKeys);
-
-  @override
-  Stream<List<String>> mapEventToState(MusicalKeyEvent event) async* {
-    switch (event) {
-      case MusicalKeyEvent.addMusicalKey:
-        yield state..add('B');
-        break;
-    }
-  }
-}
 
 void main() => runApp(MyApp());
 
@@ -71,18 +58,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  FlatButton createRow(BuildContext context, String musicalKey, style) {
-    return FlatButton(
-      child: Text(musicalKey, style: style, textAlign: TextAlign.center),
-      onPressed: () {
-        setState(() {
-          context.bloc<MusicalKeyBloc>().add(MusicalKeyEvent.addMusicalKey);
-          // musicalKeysBloc.state.contains(musicalKey)
-          //     ? musicalKeysBloc.state.remove(musicalKey)
-          //     : musicalKeysBloc.state.add(musicalKey);
-        });
-      },
-    );
+  BlocBuilder createRow(BuildContext context, String musicalKey, style) {
+    return BlocBuilder<MusicalKeyBloc, List<String>>(builder: (context, state) {
+      return FlatButton(
+        child: Text(musicalKey, style: style, textAlign: TextAlign.center),
+        onPressed: () {
+          if (state.contains(musicalKey)) {
+            context.bloc<MusicalKeyBloc>().remove(musicalKey);
+          } else {
+            context.bloc<MusicalKeyBloc>().add(musicalKey);
+          }
+        },
+      );
+    });
   }
 
   @override
