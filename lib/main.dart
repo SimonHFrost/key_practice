@@ -12,7 +12,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: Text('Key Practice'),
+      home: HomeView(),
     );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return ListView(children: <Widget>[Text('A'), Text('B'), Text('C')]);
   }
 }
