@@ -24,8 +24,9 @@ class MyApp extends StatelessWidget {
 class ActiveKeys extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MusicCubit, List<String>>(
-      builder: (context, List<String> keys) =>
-          Text(context.bloc<MusicCubit>().state.toString()),
+      builder: (context, List<String> keys) {
+        return Text(keys.toString());
+      },
     );
   }
 }
