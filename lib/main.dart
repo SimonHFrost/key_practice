@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
 
 class ActiveKeys extends StatelessWidget {
   Widget build(BuildContext context) {
-    return BlocBuilder<MusicCubit, List<String>>(
-      builder: (context, List<String> keys) {
+    return BlocBuilder<MusicCubit, String>(
+      builder: (context, keys) {
         return Text(keys.toString());
       },
     );
@@ -47,21 +47,19 @@ class KeyButtons extends StatelessWidget {
 
 class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
-    return BlocBuilder<MusicCubit, List<String>>(
-      builder: (context, List<String> keys) => Scaffold(
-        body: Column(
-          children: [
-            ActiveKeys(),
-            KeyButtons(),
-          ],
-        ),
+    return Scaffold(
+      body: Column(
+        children: [
+          ActiveKeys(),
+          KeyButtons(),
+        ],
       ),
     );
   }
 }
 
-class MusicCubit extends Cubit<List<String>> {
-  MusicCubit() : super([]);
+class MusicCubit extends Cubit<String> {
+  MusicCubit() : super('');
 
-  void addKey(key) => emit(state..add(key));
+  void addKey(key) => emit(state + key);
 }
