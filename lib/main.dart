@@ -21,19 +21,37 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class ActiveKeys extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return BlocBuilder<MusicCubit, List<String>>(
+      builder: (context, List<String> keys) =>
+          Text(context.bloc<MusicCubit>().state.toString()),
+    );
+  }
+}
+
+class KeyButtons extends StatelessWidget {
+  List<String> keys = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+
+  Widget build(BuildContext context) {
+    return Column(
+        children: keys.map((e) {
+      return MaterialButton(
+        child: Text(e),
+        onPressed: () => context.bloc<MusicCubit>().addKey(e),
+      );
+    }).toList());
+  }
+}
+
 class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MusicCubit, List<String>>(
       builder: (context, List<String> keys) => Scaffold(
         body: Column(
           children: [
-            Column(children: keys.map((key) => Text(key)).toList()),
-            FlatButton(
-              onPressed: () {
-                context.bloc<MusicCubit>().addKey('A');
-              },
-              child: Text('A'),
-            ),
+            ActiveKeys(),
+            KeyButtons(),
           ],
         ),
       ),
