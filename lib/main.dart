@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'countdown.dart';
+
 enum MusicalKeyEvent { addMusicalKey }
 
 void main() => runApp(MyApp());
@@ -63,7 +65,10 @@ class HomeView extends StatelessWidget {
         title: const Text('Key Practice'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Countdown()));
+        },
         child: const Icon(Icons.play_arrow),
       ),
       body: Column(
