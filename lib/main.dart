@@ -32,22 +32,33 @@ class ActiveKeys extends StatelessWidget {
 }
 
 class KeyButtons extends StatelessWidget {
-  List<String> keys = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  List<String> availableKeys = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
   Widget build(BuildContext context) {
-    return Column(
-        children: keys.map((e) {
-      return MaterialButton(
-        child: Text(e),
-        onPressed: () => context.bloc<MusicCubit>().addKey(e),
+    return BlocBuilder<MusicCubit, String>(builder: (context, keys) {
+      return Column(
+        children: availableKeys.map((e) {
+          return MaterialButton(
+            color: keys.contains(e) ? Colors.red : Colors.blue,
+            child: Text(e),
+            onPressed: () => context.bloc<MusicCubit>().addKey(e),
+          );
+        }).toList(),
       );
-    }).toList());
+    });
   }
 }
 
 class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Key Practice'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        child: const Icon(Icons.play_arrow),
+      ),
       body: Column(
         children: [
           ActiveKeys(),
