@@ -38,10 +38,17 @@ class KeyButtons extends StatelessWidget {
     return BlocBuilder<MusicCubit, String>(builder: (context, keys) {
       return Column(
         children: availableKeys.map((e) {
+          var active = keys.contains(e);
           return MaterialButton(
-            color: keys.contains(e) ? Colors.red : Colors.blue,
+            color: keys.contains(e) ? Colors.amber : Colors.white,
             child: Text(e),
-            onPressed: () => context.bloc<MusicCubit>().addKey(e),
+            onPressed: () {
+              if (active) {
+                context.bloc<MusicCubit>().removeKey(e);
+              } else {
+                context.bloc<MusicCubit>().addKey(e);
+              }
+            },
           );
         }).toList(),
       );
@@ -73,4 +80,5 @@ class MusicCubit extends Cubit<String> {
   MusicCubit() : super('');
 
   void addKey(key) => emit(state + key);
+  void removeKey(key) => emit(state.replaceFirst(key, ''));
 }
