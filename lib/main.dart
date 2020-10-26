@@ -11,15 +11,16 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return BlocProvider<MusicCubit>(
+      create: (context) => MusicCubit(),
+      child: MaterialApp(
         title: 'Key Practice',
         theme: ThemeData(
           primarySwatch: Colors.amber,
         ),
-        home: BlocProvider<MusicCubit>(
-          create: (BuildContext context) => MusicCubit(),
-          child: HomeView(),
-        ));
+        home: HomeView(),
+      ),
+    );
   }
 }
 

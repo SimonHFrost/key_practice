@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'main.dart';
 
 class Countdown extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -31,6 +34,10 @@ class _CountdownViewState extends State<CountdownView> {
   }
 
   Widget build(BuildContext context) {
-    return Center(child: Text('COUNTDOWN ' + widget.timeLeft.toString()));
+    return BlocBuilder<MusicCubit, String>(builder: (context, keys) {
+      return Center(
+          child: Text(
+              keys.toString() + 'COUNTDOWN ' + widget.timeLeft.toString()));
+    });
   }
 }
