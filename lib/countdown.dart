@@ -24,8 +24,16 @@ class CountdownView extends StatefulWidget {
 }
 
 class _CountdownViewState extends State<CountdownView> {
+  Timer timer;
+
+  @override
+  dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   _CountdownViewState() {
-    Timer.periodic(new Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(new Duration(seconds: 1), (timer) {
       setState(() {
         widget.timeLeft = widget.timeLeft - 1;
         print(widget.timeLeft);
@@ -36,8 +44,10 @@ class _CountdownViewState extends State<CountdownView> {
   Widget build(BuildContext context) {
     return BlocBuilder<MusicCubit, String>(builder: (context, keys) {
       return Center(
-          child: Text(
-              keys.toString() + 'COUNTDOWN ' + widget.timeLeft.toString()));
+        child: Text(
+          keys.toString() + 'COUNTDOWN ' + widget.timeLeft.toString(),
+        ),
+      );
     });
   }
 }
