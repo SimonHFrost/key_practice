@@ -13,7 +13,6 @@ class Countdown extends StatelessWidget {
       ),
       body: BlocBuilder<MusicCubit, String>(
         builder: (context, keys) {
-          print('TEST' + keys);
           return CountdownView(keys: keys);
         },
       ),

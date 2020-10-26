@@ -40,6 +40,7 @@ class KeyButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MusicCubit, String>(builder: (context, keys) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: availableKeys.map((e) {
           var active = keys.contains(e);
           return MaterialButton(
