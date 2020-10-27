@@ -72,19 +72,26 @@ class _CountdownViewState extends State<CountdownView> {
     return Container(
       child: Align(
         alignment: Alignment.center,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            CircularProgressIndicator(
-                value: 1 - (widget.timeLeft / widget.maxTime)),
-            Text(
-              activeKey,
-              style: TextStyle(fontSize: 100),
-            ),
-            Text(
-              widget.timeLeft.toString(),
-              style: TextStyle(fontSize: 60),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  backgroundColor: Color.fromRGBO(0, 0, 0, 1),
+                  value: 1 - (widget.timeLeft / widget.maxTime),
+                  strokeWidth: 10,
+                ),
+                Text(
+                  activeKey,
+                  style: TextStyle(fontSize: 100),
+                ),
+                Text(
+                  widget.timeLeft.toString(),
+                  style: TextStyle(fontSize: 60),
+                )
+              ],
             )
           ],
         ),
