@@ -43,11 +43,9 @@ class _CountdownViewState extends State<CountdownView> {
 
   reset() {
     setState(() {
-      print(widget.keys);
       var charactersMinusActiveKey = activeKey == null
           ? widget.keys
           : widget.keys.replaceFirst(activeKey, '');
-      print('charactersMinusActiveKey ' + charactersMinusActiveKey);
       activeKey = charactersMinusActiveKey.characters
           .elementAt(new Random().nextInt(charactersMinusActiveKey.length));
       widget.timeLeft = 5;
@@ -70,9 +68,23 @@ class _CountdownViewState extends State<CountdownView> {
   }
 
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        activeKey + widget.timeLeft.toString(),
+    return Container(
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              activeKey,
+              style: TextStyle(fontSize: 100),
+            ),
+            Text(
+              widget.timeLeft.toString(),
+              style: TextStyle(fontSize: 60),
+            )
+          ],
+        ),
       ),
     );
   }
