@@ -22,7 +22,8 @@ class Countdown extends StatelessWidget {
 }
 
 class CountdownView extends StatefulWidget {
-  var timeLeft = 5;
+  var maxTime = 60;
+  var timeLeft;
   final String keys;
 
   CountdownView({this.keys});
@@ -48,7 +49,7 @@ class _CountdownViewState extends State<CountdownView> {
           : widget.keys.replaceFirst(activeKey, '');
       activeKey = charactersMinusActiveKey.characters
           .elementAt(new Random().nextInt(charactersMinusActiveKey.length));
-      widget.timeLeft = 5;
+      widget.timeLeft = widget.maxTime;
     });
   }
 
@@ -75,6 +76,8 @@ class _CountdownViewState extends State<CountdownView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            CircularProgressIndicator(
+                value: 1 - (widget.timeLeft / widget.maxTime)),
             Text(
               activeKey,
               style: TextStyle(fontSize: 100),

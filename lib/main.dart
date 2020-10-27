@@ -24,16 +24,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ActiveKeys extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return BlocBuilder<MusicCubit, String>(
-      builder: (context, keys) {
-        return Text(keys.toString());
-      },
-    );
-  }
-}
-
 class KeyButtons extends StatelessWidget {
   List<String> availableKeys = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
@@ -73,12 +63,7 @@ class HomeView extends StatelessWidget {
         },
         child: const Icon(Icons.play_arrow),
       ),
-      body: Column(
-        children: [
-          ActiveKeys(),
-          KeyButtons(),
-        ],
-      ),
+      body: KeyButtons(),
     );
   }
 }
