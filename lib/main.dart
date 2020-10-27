@@ -34,6 +34,7 @@ class KeyButtons extends StatelessWidget {
         children: availableKeys.map((e) {
           var active = keys.contains(e);
           return MaterialButton(
+            height: 50,
             color: keys.contains(e) ? Colors.amber : Colors.white,
             child: Text(e),
             onPressed: () {
