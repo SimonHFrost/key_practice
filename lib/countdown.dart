@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,7 @@ class Countdown extends StatelessWidget {
 }
 
 class CountdownView extends StatefulWidget {
-  var timeLeft = 60;
+  var timeLeft = 5;
   final String keys;
 
   CountdownView({this.keys});
@@ -40,15 +41,27 @@ class _CountdownViewState extends State<CountdownView> {
     super.dispose();
   }
 
+  reset() {
+    setState(() {
+      var charactersMinusActiveKey = widget.keys.replaceFirst(activeKey, '');
+      print('charactersMinusActiveKey ' + charactersMinusActiveKey);
+      activeKey = charactersMinusActiveKey.characters
+          .elementAt(new Random().nextInt(charactersMinusActiveKey.length));
+      widget.timeLeft = 5;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    this.activeKey =
-        widget.keys.characters.elementAt(widget.keys.characters.length - 1);
+    this.reset();
     timer = Timer.periodic(new Duration(seconds: 1), (timer) {
       setState(() {
-        widget.timeLeft = widget.timeLeft - 1;
-        print(widget.timeLeft);
+        if (widget.timeLeft <= 0) {
+          this.reset();
+        } else {
+          widget.timeLeft = widget.timeLeft - 1;
+        }
       });
     });
   }
