@@ -73,16 +73,22 @@ class _CountdownViewState extends State<CountdownView> {
       child: Align(
         alignment: Alignment.center,
         child: Stack(
+          fit: StackFit.expand,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(
+            Positioned.fill(
+              child: Padding(
+                padding: EdgeInsets.all(64),
+                child: CircularProgressIndicator(
                   backgroundColor: Color.fromRGBO(0, 0, 0, 1),
                   value: 1 - (widget.timeLeft / widget.maxTime),
                   strokeWidth: 10,
                 ),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Text(
                   activeKey,
                   style: TextStyle(fontSize: 100),
