@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 }
 
 class KeyButtons extends StatelessWidget {
-  List<String> availableKeys = [
+  List<String> majorKeys = [
     'A',
     'A#',
     'B',
@@ -40,7 +40,22 @@ class KeyButtons extends StatelessWidget {
     'G#'
   ];
 
-  Widget buildKeyColumn(musicCubit, keys) {
+  List<String> minorKeys = [
+    'Am',
+    'A#m',
+    'Bm',
+    'Cm',
+    'C#m',
+    'Dm',
+    'D#m',
+    'Em',
+    'Fm',
+    'F#m',
+    'Gm',
+    'G#m'
+  ];
+
+  Widget buildKeyColumn(musicCubit, List<String> availableKeys, keys) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: availableKeys.map((e) {
@@ -62,11 +77,16 @@ class KeyButtons extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    return BlocBuilder<MusicCubit, List<String>>(builder: (context, keys) {
+    return BlocBuilder<MusicCubit, List<String>>(
+        builder: (context, selectedKeys) {
       return Row(
         children: [
-          Expanded(child: buildKeyColumn(context.bloc<MusicCubit>(), keys)),
-          Expanded(child: buildKeyColumn(context.bloc<MusicCubit>(), keys))
+          Expanded(
+              child: buildKeyColumn(
+                  context.bloc<MusicCubit>(), majorKeys, selectedKeys)),
+          Expanded(
+              child: buildKeyColumn(
+                  context.bloc<MusicCubit>(), minorKeys, selectedKeys))
         ],
       );
     });
