@@ -12,7 +12,7 @@ class Countdown extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Key Practice'),
       ),
-      body: BlocBuilder<MusicCubit, String>(
+      body: BlocBuilder<MusicCubit, List<String>>(
         builder: (context, keys) {
           return CountdownView(keys: keys);
         },
@@ -22,9 +22,9 @@ class Countdown extends StatelessWidget {
 }
 
 class CountdownView extends StatefulWidget {
-  var maxTime = 60;
+  var maxTime = 30;
   var timeLeft;
-  final String keys;
+  final List<String> keys;
 
   CountdownView({this.keys});
 
@@ -44,11 +44,10 @@ class _CountdownViewState extends State<CountdownView> {
 
   reset() {
     setState(() {
-      var charactersMinusActiveKey = activeKey == null
-          ? widget.keys
-          : widget.keys.replaceFirst(activeKey, '');
-      activeKey = charactersMinusActiveKey.characters
-          .elementAt(new Random().nextInt(charactersMinusActiveKey.length));
+      List<String> charactersMinusActiveKey =
+          activeKey == null ? widget.keys : widget.keys.remove(activeKey);
+      activeKey = charactersMinusActiveKey[
+          new Random().nextInt(charactersMinusActiveKey.length)];
       widget.timeLeft = widget.maxTime;
     });
   }

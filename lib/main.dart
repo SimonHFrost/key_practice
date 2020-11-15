@@ -25,10 +25,23 @@ class MyApp extends StatelessWidget {
 }
 
 class KeyButtons extends StatelessWidget {
-  List<String> availableKeys = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  List<String> availableKeys = [
+    'A',
+    'A#',
+    'B',
+    'C',
+    'C#',
+    'D',
+    'D#',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'G#'
+  ];
 
   Widget build(BuildContext context) {
-    return BlocBuilder<MusicCubit, String>(builder: (context, keys) {
+    return BlocBuilder<MusicCubit, List<String>>(builder: (context, keys) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: availableKeys.map((e) {
@@ -69,9 +82,16 @@ class HomeView extends StatelessWidget {
   }
 }
 
-class MusicCubit extends Cubit<String> {
-  MusicCubit() : super('');
+class MusicCubit extends Cubit<List<String>> {
+  MusicCubit() : super(List<String>());
 
-  void addKey(key) => emit(state + key);
-  void removeKey(key) => emit(state.replaceFirst(key, ''));
+  void addKey(key) {
+    List<String> newList = []..addAll(state..add(key));
+    emit(newList);
+  }
+
+  void removeKey(key) {
+    List<String> newList = []..addAll(state..remove(key));
+    emit(newList);
+  }
 }
