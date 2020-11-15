@@ -40,25 +40,34 @@ class KeyButtons extends StatelessWidget {
     'G#'
   ];
 
+  Widget buildKeyColumn(musicCubit, keys) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: availableKeys.map((e) {
+        var active = keys.contains(e);
+        return MaterialButton(
+          height: 50,
+          color: keys.contains(e) ? Colors.amber : Colors.white,
+          child: Text(e),
+          onPressed: () {
+            if (active) {
+              musicCubit.removeKey(e);
+            } else {
+              musicCubit.addKey(e);
+            }
+          },
+        );
+      }).toList(),
+    );
+  }
+
   Widget build(BuildContext context) {
     return BlocBuilder<MusicCubit, List<String>>(builder: (context, keys) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: availableKeys.map((e) {
-          var active = keys.contains(e);
-          return MaterialButton(
-            height: 50,
-            color: keys.contains(e) ? Colors.amber : Colors.white,
-            child: Text(e),
-            onPressed: () {
-              if (active) {
-                context.bloc<MusicCubit>().removeKey(e);
-              } else {
-                context.bloc<MusicCubit>().addKey(e);
-              }
-            },
-          );
-        }).toList(),
+      return Row(
+        children: [
+          Expanded(child: buildKeyColumn(context.bloc<MusicCubit>(), keys)),
+          Expanded(child: buildKeyColumn(context.bloc<MusicCubit>(), keys))
+        ],
       );
     });
   }
