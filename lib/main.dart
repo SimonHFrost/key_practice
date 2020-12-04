@@ -55,24 +55,34 @@ class KeyButtons extends StatelessWidget {
     'G#m'
   ];
 
-  Widget buildKeyColumn(musicCubit, List<String> availableKeys, keys) {
+  Widget buildKeyColumn(musicCubit, title, List<String> availableKeys, keys) {
+    List<Widget> header = [
+      Center(
+          child: Text(
+        title,
+        textScaleFactor: 2.0,
+      ))
+    ];
+
+    var keyButtons = availableKeys.map((e) {
+      var active = keys.contains(e);
+      return MaterialButton(
+        height: 50,
+        color: keys.contains(e) ? Colors.amber : Colors.white,
+        child: Text(e),
+        onPressed: () {
+          if (active) {
+            musicCubit.removeKey(e);
+          } else {
+            musicCubit.addKey(e);
+          }
+        },
+      );
+    });
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: availableKeys.map((e) {
-        var active = keys.contains(e);
-        return MaterialButton(
-          height: 50,
-          color: keys.contains(e) ? Colors.amber : Colors.white,
-          child: Text(e),
-          onPressed: () {
-            if (active) {
-              musicCubit.removeKey(e);
-            } else {
-              musicCubit.addKey(e);
-            }
-          },
-        );
-      }).toList(),
+      children: header..addAll(keyButtons),
     );
   }
 
@@ -82,11 +92,11 @@ class KeyButtons extends StatelessWidget {
       return Row(
         children: [
           Expanded(
-              child: buildKeyColumn(
-                  context.bloc<MusicCubit>(), majorKeys, selectedKeys)),
+              child: buildKeyColumn(context.bloc<MusicCubit>(), 'Major',
+                  majorKeys, selectedKeys)),
           Expanded(
               child: buildKeyColumn(
-                  context.bloc<MusicCubit>(), minorKeys, selectedKeys))
+                  context.bloc<MusicCubit>(), 'Minor', minorKeys, selectedKeys))
         ],
       );
     });
