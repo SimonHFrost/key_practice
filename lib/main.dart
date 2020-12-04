@@ -58,10 +58,14 @@ class KeyButtons extends StatelessWidget {
   Widget buildKeyColumn(musicCubit, title, List<String> availableKeys, keys) {
     List<Widget> header = [
       Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Text(
-        title,
-        textScaleFactor: 2.0,
-      ))
+            title,
+            textScaleFactor: 2.0,
+          ),
+        ),
+      )
     ];
 
     var keyButtons = availableKeys.map((e) {
@@ -89,15 +93,17 @@ class KeyButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MusicCubit, List<String>>(
         builder: (context, selectedKeys) {
-      return Row(
-        children: [
-          Expanded(
-              child: buildKeyColumn(context.bloc<MusicCubit>(), 'Major',
-                  majorKeys, selectedKeys)),
-          Expanded(
-              child: buildKeyColumn(
-                  context.bloc<MusicCubit>(), 'Minor', minorKeys, selectedKeys))
-        ],
+      return SingleChildScrollView(
+        child: Row(
+          children: [
+            Expanded(
+                child: buildKeyColumn(context.bloc<MusicCubit>(), 'Major',
+                    majorKeys, selectedKeys)),
+            Expanded(
+                child: buildKeyColumn(context.bloc<MusicCubit>(), 'Minor',
+                    minorKeys, selectedKeys))
+          ],
+        ),
       );
     });
   }
